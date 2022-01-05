@@ -1,0 +1,8 @@
+name: BoomPlugin
+version: '${project.version}'
+main: com.blub.testplugin.TestPlugin
+api-version: 1.18
+authors: [ Blub ]
+description: Boom? Yes Rico boom!
+commands:
+  boom:
