@@ -9,3 +9,15 @@ commands:
     description: Creates an expolsion
   chickenboom:
     description: Creates an explosion of chickens
+permissions:
+  boomplugin.*:
+    description: BoomPlugin
+    children:
+      boomplugin.boom: true
+      boomplugin.chickenboom: true
+    boomplugin.boom:
+      description: Creates an explosion
+      default: op
+    boomplugin.chickenboom:
+      description: Creates an explosion of chickens
+      default: op

@@ -27,7 +27,7 @@ public class ChickenBoomCommand implements CommandExecutor {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "You can't use this command as console!");
         } else {
             Player p = (Player) sender;
-            if (p.hasPermission("boomplugin.boom")) {
+            if (p.hasPermission("boomplugin.chickenboom")) {
                 if (args.length == 1) {
                     try {
                         //if it is an int check the max Chickenpower
