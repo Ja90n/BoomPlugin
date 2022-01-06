@@ -9,8 +9,11 @@ public final class TestPlugin extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        getConfig().options().copyDefaults();
+        saveDefaultConfig();
         Bukkit.getPluginManager().registerEvents(new Events(), this);
-        getCommand("boom").setExecutor(new BoomCommand());
+        getCommand("boom").setExecutor(new BoomCommand(this));
+        getCommand("chickenboom").setExecutor(new ChickenBoomCommand(this));
         Bukkit.getConsoleSender().sendMessage(ChatColor.LIGHT_PURPLE + "Boom plugin has been loaded!");
     }
 

@@ -1,5 +1,6 @@
 package com.blub.testplugin;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -8,37 +9,46 @@ import org.bukkit.entity.Player;
 
 public class BoomCommand implements CommandExecutor {
 
+    private TestPlugin main;
+
+    public BoomCommand(TestPlugin main){
+        this.main = main;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (sender instanceof Player){
-            Player p = (Player) sender;
+        main.getConfig();
 
-            //sellect
-            if (args.length == 1) {
-                if (args[0].equalsIgnoreCase("test")) {
-                    p.sendMessage(ChatColor.LIGHT_PURPLE + "Test succesfull, ready for takeoff");
-                } else{
-                    try{
+        if (!(sender instanceof Player)) {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "You can't use this command as console!");
+        } else {
+            Player p = (Player) sender;
+            if (p.hasPermission("boomplugin.boom")) {
+                if (args.length == 1) {
+                    try {
+                        //if it is an int check the max boompower
                         int boompower = Integer.parseInt(args[0]);
-                        if (boompower < 500){
-                            p.sendMessage(ChatColor.RED + "Hehe boom");
-                            p.getWorld().createExplosion(p.getLocation(), boompower);
-                        }else{
-                            p.sendMessage(ChatColor.DARK_RED + "Choose a number smaller than 500");
+                        int connumber = main.getConfig().getInt("Boompower-Limit");
+                        if (boompower < connumber) {
+                            String config = (String) main.getConfig().get("Boom-Message");
+                            if (!(config.equals(""))) {
+                                p.sendMessage(ChatColor.RED + config);
+                            }
+                                p.getWorld().createExplosion(p.getLocation(), boompower);
+                            } else {
+                                //if arg 0 is higher than the boompower
+                                p.sendMessage(ChatColor.RED + "Choose a number smaller than " + main.getConfig().getInt("Boompower-Limit"));
+                            }
+                            //if it is not an int
+                        } catch (IllegalArgumentException e) {
+                            p.sendMessage(ChatColor.RED + "You need to fill in a number");
                         }
-                    } catch (IllegalArgumentException e){
-                        p.sendMessage(ChatColor.RED + "You need to fill in a number");
+                    } else {
+                        p.sendMessage(ChatColor.RED + "Invalid arguments. Try: /boom <boompower>");
                     }
                 }
-            } else{
-                p.sendMessage(ChatColor.RED + "Invalid arguments. Try: /boom <boompower>");
             }
-
-        } else{
-            sender.sendMessage(ChatColor.DARK_RED + "You are not a player!");
-        }
-
         return false;
     }
 }

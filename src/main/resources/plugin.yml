@@ -6,3 +6,6 @@ authors: [ Blub ]
 description: Boom? Yes Rico boom!
 commands:
   boom:
+    description: Creates an expolsion
+  chickenboom:
+    description: Creates an explosion of chickens

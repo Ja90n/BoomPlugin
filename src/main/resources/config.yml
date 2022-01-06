@@ -1,0 +1,8 @@
+#Configuration file for BoomPlugin
+#---------------------------------
+#Limit of boompower and chickenpower
+Boompower-Limit: 500
+Chickenpower-Limit: 200
+#Message printed after /boom and /chickenboom
+Boom-Message: ''
+Chickenboom-Message: ''
